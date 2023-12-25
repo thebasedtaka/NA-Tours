@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const slugify = require('slugify');
 const Booking = require('../models/bookingModel');
+const Reviews = require('../models/reviewModel');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   // 1) Get tour data from collection
@@ -121,5 +122,14 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
   res.status(200).render('account', {
     title: 'Your account',
     user: updatedUser,
+  });
+});
+
+exports.getReviews = catchAsync(async (req, res, next) => {
+  //display all reviews
+  const reviews = await Reviews.find({ user: req.user.id });
+  res.status(200).render('reviews', {
+    title: 'Reviews',
+    reviews,
   });
 });

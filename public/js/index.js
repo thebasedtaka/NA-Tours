@@ -5,6 +5,7 @@ import { displayMap } from './mapbox.js';
 import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
+import { editReview } from './review.js';
 // DOM ELEMENTS
 
 const mapBox = document.getElementById('map');
@@ -14,6 +15,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const reviewPage = document.querySelector('.reviews__card');
 
 // DELEGATION
 if (mapBox) {
@@ -82,5 +84,35 @@ if (bookBtn) {
     const { tourId } = e.target.dataset;
     console.log(tourId);
     bookTour(tourId);
+  });
+}
+
+if (reviewPage) {
+  const editButton = document.querySelectorAll('.edit');
+  let edit = false;
+
+  editButton.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      if (edit) {
+        // Code for the second button press functionality
+        const reviewId = btn.dataset.reviewId;
+        const reviewBody = e.target.parentNode.querySelector('textarea');
+        console.log(reviewBody.value !== '');
+        if (reviewBody.value.trim() !== '') {
+          editReview(reviewId, reviewBody.value);
+        }
+
+        edit = false;
+        e.target.parentNode.removeChild(reviewBody);
+        e.target.textContent = 'Click me';
+      } else {
+        // Code for the first button press functionality
+        edit = true;
+        e.target.textContent = 'Processing...';
+        const textBox = document.createElement('textarea');
+        textBox.placeholder = 'Enter your edit here';
+        e.target.parentNode.appendChild(textBox);
+      }
+    });
   });
 }

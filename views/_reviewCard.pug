@@ -1,5 +1,6 @@
 mixin reviewCard(review)
   .reviews__card
+    button.edit(type='button' data-review-id=review.id) Click me
     .reviews__avatar
       img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}`)
       h6.reviews__user= review.user.name
