@@ -89,29 +89,74 @@ if (bookBtn) {
 
 if (reviewPage) {
   const editButton = document.querySelectorAll('.edit');
+  const ratingStars = document.querySelectorAll('.reviews__star');
+  const reviewsCard = document.querySelector('.reviews__card');
+  const reviewText = document.querySelector('.reviews__text');
+  const textBox = document.createElement('input');
+
+  let reviewId, reviewBody;
+  let rating;
+  let hoveredStar;
   let edit = false;
+
+  function updateStarClasses() {
+    ratingStars.forEach((star, index) => {
+      star.classList.toggle('hovered', index < hoveredStar);
+    });
+  }
+
+  function handleMouseEnter(e) {
+    // Get the index of the hovered star
+    const index = Array.from(ratingStars).indexOf(e.target);
+    hoveredStar = index + 1;
+    updateStarClasses();
+  }
+
+  function handleMouseExit() {
+    hoveredStar = null;
+    updateStarClasses();
+  }
+
+  function handleClick(e) {
+    // selects the clicked star and if there is an image, it reroutes to the parent
+    const clickedStar =
+      e.target.nodeName === 'use' ? e.target.parentNode : e.target;
+    rating = +clickedStar.dataset.starIndex + 1;
+    // removes the hover effect
+    hoveredStar = rating;
+    updateStarClasses();
+    e.target.removeEventListener('mouseover', handleMouseEnter);
+    e.target.removeEventListener('mouseout', handleMouseExit);
+    e.target.removeEventListener('click', handleClick);
+  }
+
+  ratingStars.forEach((star) => {
+    star.addEventListener('mouseover', handleMouseEnter);
+    star.addEventListener('mouseout', handleMouseExit);
+    star.addEventListener('click', handleClick);
+  });
 
   editButton.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       if (edit) {
         // Code for the second button press functionality
-        const reviewId = btn.dataset.reviewId;
-        const reviewBody = e.target.parentNode.querySelector('textarea');
-        console.log(reviewBody.value !== '');
-        if (reviewBody.value.trim() !== '') {
-          editReview(reviewId, reviewBody.value);
-        }
-
+        reviewId = btn.dataset.reviewId;
+        reviewBody =
+          e.target.parentNode.parentNode.querySelector('.form__input');
         edit = false;
-        e.target.parentNode.removeChild(reviewBody);
-        e.target.textContent = 'Click me';
+        editReview(reviewId, reviewBody.value, rating);
+        textBox.replaceWith(reviewText);
       } else {
         // Code for the first button press functionality
         edit = true;
-        e.target.textContent = 'Processing...';
-        const textBox = document.createElement('textarea');
-        textBox.placeholder = 'Enter your edit here';
-        e.target.parentNode.appendChild(textBox);
+        e.target.textContent = 'Update';
+
+        textBox.classList.add('form__input');
+        console.log(reviewText);
+        textBox.value = reviewText.textContent;
+        console.log('click');
+        // Replace the text node with the input node
+        reviewText.replaceWith(textBox);
       }
     });
   });

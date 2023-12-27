@@ -183,6 +183,10 @@ body {
   z-index: 10;
 }
 
+.reviews__star.hovered {
+  fill: green;
+}
+
 .btn,
 .btn:link,
 .btn:visited {
@@ -215,6 +219,11 @@ body {
   transform: translateY(-1px);
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.button-container {
+  margin-top: 2rem;
+  padding: 4rem;
 }
 
 .btn:focus {
