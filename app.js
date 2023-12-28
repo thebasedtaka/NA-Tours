@@ -34,7 +34,7 @@ app.use(
         connectSrc: [
           "'self'",
           'http://127.0.0.1:8000',
-          'ws://127.0.0.1:52460/',
+          'ws://127.0.0.1:52460/', // Corrected this line
           'https://*.mapbox.com',
           'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js',
           'https://js.stripe.com/v3/',

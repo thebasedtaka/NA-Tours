@@ -6,8 +6,10 @@ const {
   updateReview,
   deleteReview,
   setTourUserIds,
+  getTourName,
 } = require('../controllers/reviewController');
 const { protect, restrictTo } = require('../controllers/authController');
+const { getMyTours } = require('../controllers/viewsController');
 
 // get params from tour router
 const router = express.Router({ mergeParams: true });

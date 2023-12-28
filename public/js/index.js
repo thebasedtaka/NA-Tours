@@ -7,6 +7,9 @@ import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
 import { editReview } from './review.js';
 // DOM ELEMENTS
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('loaded');
+});
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
@@ -15,8 +18,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
-const reviewPage = document.querySelector('.reviews__card');
-
+const reviewPage = document.querySelector('.card.cardReview');
 // DELEGATION
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
@@ -91,9 +93,8 @@ if (reviewPage) {
   const editButton = document.querySelectorAll('.edit');
   const ratingStars = document.querySelectorAll('.reviews__star');
   const reviewsCard = document.querySelector('.reviews__card');
-  const reviewText = document.querySelector('.reviews__text');
+  const reviewText = document.querySelector('.card__text');
   const textBox = document.createElement('input');
-
   let reviewId, reviewBody;
   let rating;
   let hoveredStar;
@@ -139,6 +140,7 @@ if (reviewPage) {
   editButton.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       if (edit) {
+        console.log('hi');
         // Code for the second button press functionality
         reviewId = btn.dataset.reviewId;
         reviewBody =

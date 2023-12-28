@@ -57,6 +57,9 @@ router
   )
   .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
+// // admin routes
+// router.route('/admin').get(protect, restrictTo('admin'), getAllTours);
+
 // router
 //   .route('/:tourId/reviews')
 //   .post(protect, restrictTo('admin'), createReview);

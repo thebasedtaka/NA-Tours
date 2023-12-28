@@ -126,8 +126,16 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
 });
 
 exports.getReviews = catchAsync(async (req, res, next) => {
-  //display all reviews
-  const reviews = await Reviews.find({ user: req.user.id });
+  // Display all reviews
+  let reviews = await Reviews.find({ user: req.user.id });
+
+  // Populate the 'tour' field with specific fields
+  reviews = await Reviews.populate(reviews, {
+    path: 'tour',
+    select: 'name imageCover', // Include the fields you need
+  });
+
+  // Render reviews
   res.status(200).render('reviews', {
     title: 'Reviews',
     reviews,
