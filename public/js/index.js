@@ -7,9 +7,6 @@ import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
 import { editReview } from './review.js';
 // DOM ELEMENTS
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('loaded');
-});
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
@@ -44,7 +41,6 @@ if (userDataForm) {
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
-    console.log([...form.entries()]);
     await updateSettings(form, 'data');
   });
 }
@@ -70,12 +66,10 @@ if (userPasswordForm) {
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('signup form submitted');
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('confirm').value;
-    console.log(password, passwordConfirm);
     await signup(name, email, password, passwordConfirm);
   });
 }
@@ -84,7 +78,6 @@ if (bookBtn) {
   bookBtn.addEventListener('click', (e) => {
     e.target.textContent = 'Processing...';
     const { tourId } = e.target.dataset;
-    console.log(tourId);
     bookTour(tourId);
   });
 }
@@ -140,7 +133,6 @@ if (reviewPage) {
   editButton.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       if (edit) {
-        console.log('hi');
         // Code for the second button press functionality
         reviewId = btn.dataset.reviewId;
         reviewBody =
@@ -154,9 +146,7 @@ if (reviewPage) {
         e.target.textContent = 'Update';
 
         textBox.classList.add('form__input');
-        console.log(reviewText);
         textBox.value = reviewText.textContent;
-        console.log('click');
         // Replace the text node with the input node
         reviewText.replaceWith(textBox);
       }

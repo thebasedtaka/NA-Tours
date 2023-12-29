@@ -307,6 +307,10 @@ body {
   outline-offset: 3px;
 }
 
+.edit__text {
+  font-size: 646rem;
+}
+
 .header {
   background-color: #444;
   padding: 0 5rem;
@@ -606,6 +610,11 @@ body {
     100% calc(100% - var(--section-rotate)),
     0 100%
   );
+}
+
+.rating {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
 }
 
 .reviews {

@@ -19,9 +19,10 @@ mixin editReviewCard(review)
         img.card__picture-img(src=`img/tours/${review.tour.imageCover}`, alt='Tour 1')
       h3.heading-tertirary
         span= review.tour.name
-    .card__details
+    .card__details.edit__text
       h4.card__sub-heading Your review
       p.card__text= review.review
+    .rating
       .reviews__rating
         each star, index in [1, 2, 3, 4, 5]
           svg.reviews__star(data-review-id=review.id data-star-index=index class=`reviews__star--${review.rating >= star ? 'active' : 'inactive'}`)

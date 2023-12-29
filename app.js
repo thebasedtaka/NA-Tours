@@ -31,24 +31,18 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        connectSrc: [
-          "'self'",
-          'http://127.0.0.1:8000',
-          'ws://127.0.0.1:52460/', // Corrected this line
-          'https://*.mapbox.com',
-          'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js',
-          'https://js.stripe.com/v3/',
-          'ws://127.0.0.1:64717/',
-          'ws://127.0.0.1:55490/',
-        ],
         scriptSrc: [
           "'self'",
-          'https://js.stripe.com/',
-          'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js',
-          'https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js',
-          'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js',
+          'https://api.mapbox.com',
+          'https://cdn.jsdelivr.net',
+          'https://js.stripe.com',
         ],
-        frameSrc: ["'self'", 'https://js.stripe.com/'],
+        connectSrc: [
+          "'self'",
+          'ws://127.0.0.1:55490/',
+          'ws://127.0.0.1:62655/',
+        ],
+        frameSrc: ["'self'", 'https://js.stripe.com'],
       },
     },
   })
