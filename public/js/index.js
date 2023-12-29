@@ -6,6 +6,12 @@ import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
 import { editReview } from './review.js';
+import {
+  handleClick,
+  handleMouseEnter,
+  handleMouseExit,
+  reviewCardInit,
+} from './reviewCard.js';
 // DOM ELEMENTS
 
 const mapBox = document.getElementById('map');
@@ -83,73 +89,12 @@ if (bookBtn) {
 }
 
 if (reviewPage) {
-  const editButton = document.querySelectorAll('.edit');
-  const ratingStars = document.querySelectorAll('.reviews__star');
-  const reviewsCard = document.querySelector('.reviews__card');
-  const reviewText = document.querySelector('.card__text');
-  const textBox = document.createElement('input');
-  let reviewId, reviewBody;
-  let rating;
-  let hoveredStar;
-  let edit = false;
-
-  function updateStarClasses() {
-    ratingStars.forEach((star, index) => {
-      star.classList.toggle('hovered', index < hoveredStar);
-    });
-  }
-
-  function handleMouseEnter(e) {
-    // Get the index of the hovered star
-    const index = Array.from(ratingStars).indexOf(e.target);
-    hoveredStar = index + 1;
-    updateStarClasses();
-  }
-
-  function handleMouseExit() {
-    hoveredStar = null;
-    updateStarClasses();
-  }
-
-  function handleClick(e) {
-    // selects the clicked star and if there is an image, it reroutes to the parent
-    const clickedStar =
-      e.target.nodeName === 'use' ? e.target.parentNode : e.target;
-    rating = +clickedStar.dataset.starIndex + 1;
-    // removes the hover effect
-    hoveredStar = rating;
-    updateStarClasses();
-    e.target.removeEventListener('mouseover', handleMouseEnter);
-    e.target.removeEventListener('mouseout', handleMouseExit);
-    e.target.removeEventListener('click', handleClick);
-  }
-
-  ratingStars.forEach((star) => {
-    star.addEventListener('mouseover', handleMouseEnter);
-    star.addEventListener('mouseout', handleMouseExit);
-    star.addEventListener('click', handleClick);
-  });
-
-  editButton.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      if (edit) {
-        // Code for the second button press functionality
-        reviewId = btn.dataset.reviewId;
-        reviewBody =
-          e.target.parentNode.parentNode.querySelector('.form__input');
-        edit = false;
-        editReview(reviewId, reviewBody.value, rating);
-        textBox.replaceWith(reviewText);
-      } else {
-        // Code for the first button press functionality
-        edit = true;
-        e.target.textContent = 'Update';
-
-        textBox.classList.add('form__input');
-        textBox.value = reviewText.textContent;
-        // Replace the text node with the input node
-        reviewText.replaceWith(textBox);
-      }
-    });
+  const reviewsCard = document.querySelectorAll('.card');
+  reviewsCard.forEach((review) => {
+    const editButton = review.querySelectorAll('.edit');
+    const ratingStars = review.querySelectorAll('.reviews__star');
+    const reviewText = review.querySelector('.card__text');
+    const textBox = document.createElement('input');
+    reviewCardInit(editButton, ratingStars, reviewText, textBox);
   });
 }
