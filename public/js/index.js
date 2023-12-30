@@ -5,13 +5,8 @@ import { displayMap } from './mapbox.js';
 import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
-import { editReview } from './review.js';
-import {
-  handleClick,
-  handleMouseEnter,
-  handleMouseExit,
-  reviewCardInit,
-} from './reviewCard.js';
+import { reviewCardInit } from './reviewCard.js';
+import { handleEditModal } from './admin.js';
 // DOM ELEMENTS
 
 const mapBox = document.getElementById('map');
@@ -22,6 +17,7 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const reviewPage = document.querySelector('.card.cardReview');
+const adminCardPage = document.querySelectorAll('.card.cardAdmin');
 // DELEGATION
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
@@ -47,6 +43,10 @@ if (userDataForm) {
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
+
+    for (const entry of form.entries()) {
+      console.log(entry);
+    }
     await updateSettings(form, 'data');
   });
 }
@@ -96,5 +96,26 @@ if (reviewPage) {
     const reviewText = review.querySelector('.card__text');
     const textBox = document.createElement('input');
     reviewCardInit(editButton, ratingStars, reviewText, textBox);
+  });
+}
+
+if (adminCardPage) {
+  const adminCard = document.querySelectorAll('.card.cardAdmin');
+  const modalContainer = document.getElementById('modal-container');
+  const formUserPhoto = document.querySelector('.form__user-photo');
+  adminCard.forEach((card) => {
+    const updateButton = card.querySelector('.btn--update');
+    updateButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const userJson = JSON.parse(updateButton.dataset.user);
+      formUserPhoto.src = `/img/users/${userJson.photo}`;
+
+      handleEditModal(modalContainer, userJson._id, e.target);
+    });
+  });
+  window.addEventListener('click', (e) => {
+    if (e.target === modalContainer) {
+      modalContainer.style.display = 'none';
+    }
   });
 }

@@ -33,8 +33,11 @@ const upload = multer({
 });
 
 exports.uploadUserPhoto = upload.single('photo');
+
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-  console.log('file uploaded', req);
+  // console.log('searching for file', req.file);
+  // console.log('req photo', req.photo);
+  //if (req.photo) req.file = req.body.photo;
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
@@ -63,19 +66,11 @@ exports.getMe = (req, res, next) => {
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //Create error if user POSTs password data
-  console.log('body', req.body);
-  if (req.body.password || req.body.passwordConfirm) {
-    return next(
-      new AppError(
-        `This route is not for password updates. Please use /updateMyPassword`
-      ),
-      400
-    );
-  }
+  console.log('body', req.file);
   // update user document
   const filteredBody = filterObj(req.body, 'name', 'email', 'photo');
   if (req.file) filteredBody.photo = req.file.filename;
-  console.log('hi', filteredBody);
+  console.log(filteredBody);
   const user = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
@@ -88,7 +83,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user.id, { active: false });
+  console.log('user id', req.file);
+  //await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({
     status: `success`,
@@ -97,6 +93,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 });
 
 exports.getUser = factory.getOne(User);
+
 exports.updateUser = factory.updateOne(User);
 
 exports.createUser = (req, res) => {
@@ -106,3 +103,18 @@ exports.createUser = (req, res) => {
   });
 };
 exports.deleteUser = factory.deleteOne(User);
+
+exports.adminUpdateUser = catchAsync(async (req, res, next) => {
+  const filteredBody = filterObj(req.body, 'name', 'email', 'photo');
+  if (req.file.filename) filteredBody.photo = req.file.filename;
+  console.log(filteredBody);
+  const user = await User.findByIdAndUpdate(req.params.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    status: `success`,
+    user,
+  });
+});

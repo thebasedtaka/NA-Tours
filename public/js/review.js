@@ -27,7 +27,6 @@ export const editReview = async (id, body, rating) => {
 
     // If the request is successful, display a success message and reload the page
     if (res.data.status === 'success') {
-      console.log('success', res.data.message);
       showAlert('success', 'Review updated successfully!');
       window.setTimeout(() => {
         location.reload();

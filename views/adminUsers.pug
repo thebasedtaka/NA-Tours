@@ -1,0 +1,56 @@
+extends base
+
+block content
+  main.main
+    .card-container
+      each user in users
+        .card.cardAdmin
+          .card__header
+            .card__picture
+              .card__picture-overlay &nbsp;
+              img.card__picture-img(src=`/img/users/${user.photo}`, alt=`${user.photo}`)
+
+          .card__details
+            h4.card__sub-heading= `${user.name}`
+            p.card__text= user.email
+            .card__data
+              svg.card__icon
+                use(xlink:href='/img/icons.svg#icon-user')
+              span= `${user.role}`
+
+          .card__footer
+            p.card__ratings
+              span.card__footer-value
+            a.btn.btn--grey.btn--small() Delete
+            p.card__ratings
+              span.card__footer-value
+            a.btn.btn--green.btn--small.btn--update(data-user=user) Update User
+
+    #modal-container
+      #modal
+        form.form.form--signup
+          .form__group.form__photo-upload
+            img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
+            input.form__upload(type='file', accept="image/*" id='photo', name='photo')
+            label(for='photo') Choose new photo
+          .form__group
+            label.form__label(for='username') Username
+            input#name.form__input(type='text', placeholder='Enter your username')
+          .form__group
+            label.form__label(for='email') Email address
+            input#email.form__input(type='email', placeholder='you@example.com')
+          .form__group.ma-bt-md
+            label.form__label(for='password') Password
+            input#password.form__input(type='password', placeholder='••••••••', minlength='8', required)
+          .form__group.ma-bt-md
+            label.form__label(for='dropdown') Role
+            select#role(name="dropdown")
+              option(value="user") User
+              option(value="guide") Guide
+              option(value="lead-guide") Lead-Guide
+              option(value="admin") Admin
+              button#selectOption(innerHTML="Select Option", type="button")  
+          .form__group
+            button#submit.btn.btn--green Sign up 
+            |
+          a.btn.btn--grey.btn--small#close-modal-btn Close

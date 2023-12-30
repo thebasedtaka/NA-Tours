@@ -10,6 +10,7 @@ const {
   getMe,
   uploadUserPhoto,
   resizeUserPhoto,
+  adminUpdateUser,
 } = require('../controllers/userController');
 
 const {
@@ -43,6 +44,10 @@ router.delete('/deleteMe', deleteMe);
 router.use(restrictTo('admin'));
 
 router.route('/').get(getAllUsers).post(createUser);
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+router
+  .route('/:id')
+  .get(getUser)
+  .patch(uploadUserPhoto, resizeUserPhoto, adminUpdateUser)
+  .delete(deleteUser);
 
 module.exports = router;

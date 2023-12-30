@@ -8,9 +8,14 @@ const {
   getMyTours,
   getSignupForm,
   getReviews,
+  getUserList,
+  getUpdatePage,
 } = require('../controllers/viewsController');
 const { protect, isLoggedIn } = require('../controllers/authController');
-const { createBookingCheckout } = require('../controllers/bookingControler');
+const {
+  createBookingCheckout,
+  getAllBookings,
+} = require('../controllers/bookingControler');
 
 const router = express.Router();
 
@@ -22,4 +27,12 @@ router.post('/submit-user-data', protect, updateUserData);
 router.get('/my-tours', protect, isLoggedIn, getMyTours);
 router.get('/signup', getSignupForm);
 router.get('/reviews', protect, isLoggedIn, getReviews);
+
+// Admin
+router.get('/admin/tours', protect, isLoggedIn);
+router.get('/admin/users', protect, isLoggedIn, getUserList);
+router.get('/admin/users/update', protect, isLoggedIn, getUpdatePage);
+router.get('/admin/reviews', protect, isLoggedIn);
+router.get('/admin/bookings', protect, isLoggedIn);
+
 module.exports = router;

@@ -141,3 +141,17 @@ exports.getReviews = catchAsync(async (req, res, next) => {
     reviews,
   });
 });
+
+exports.getUserList = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).render('adminUsers', {
+    title: 'Users',
+    users,
+  });
+});
+
+exports.getUpdatePage = catchAsync(async (req, res, next) => {
+  res.status(200).render('adminUsers', {
+    title: 'User',
+  });
+});
