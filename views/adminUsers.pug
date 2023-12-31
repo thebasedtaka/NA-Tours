@@ -21,7 +21,7 @@ block content
           .card__footer
             p.card__ratings
               span.card__footer-value
-            a.btn.btn--grey.btn--small() Delete
+            a.btn.btn--grey.btn--small.btn--delete() Delete
             p.card__ratings
               span.card__footer-value
             a.btn.btn--green.btn--small.btn--update(data-user=user) Update User
@@ -51,6 +51,6 @@ block content
               option(value="admin") Admin
               button#selectOption(innerHTML="Select Option", type="button")  
           .form__group
-            button#submit.btn.btn--green Sign up 
+            button#submit.btn.btn--green Update 
             |
           a.btn.btn--grey.btn--small#close-modal-btn Close

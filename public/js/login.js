@@ -30,7 +30,6 @@ export const logout = async () => {
     });
 
     if ((res.data.status = 'success')) {
-      console.log(window.location.href == '/me');
       location.assign(
         window.location.href.endsWith('/me') ? '/' : window.location.href
       );

@@ -6,7 +6,7 @@ import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
 import { reviewCardInit } from './reviewCard.js';
-import { handleEditModal } from './admin.js';
+import { handleDeleteUser, handleEditModal } from './admin.js';
 // DOM ELEMENTS
 
 const mapBox = document.getElementById('map');
@@ -43,10 +43,6 @@ if (userDataForm) {
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
-
-    for (const entry of form.entries()) {
-      console.log(entry);
-    }
     await updateSettings(form, 'data');
   });
 }
@@ -105,9 +101,15 @@ if (adminCardPage) {
   const formUserPhoto = document.querySelector('.form__user-photo');
   adminCard.forEach((card) => {
     const updateButton = card.querySelector('.btn--update');
+    const deletebutton = card.querySelector('.btn--delete');
+    const userJson = JSON.parse(updateButton.dataset.user);
+
+    deletebutton.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleDeleteUser(userJson._id);
+    });
     updateButton.addEventListener('click', (e) => {
       e.preventDefault();
-      const userJson = JSON.parse(updateButton.dataset.user);
       formUserPhoto.src = `/img/users/${userJson.photo}`;
 
       handleEditModal(modalContainer, userJson._id, e.target);

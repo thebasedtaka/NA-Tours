@@ -113,14 +113,12 @@ exports.logout = (req, res) => {
 //protect rendered pages
 exports.isLoggedIn = async (req, res, next) => {
   try {
-    console.log(req.cookies);
     if (req.cookies.jwt) {
       // 1) Verify token
       const decoded = await promisify(jwt.verify)(
         req.cookies.jwt,
         process.env.JWT_SECRET
       );
-      console.log('decoded', decoded);
       // 3) Validate user
       const currentUser = await User.findById(decoded.id);
       if (!currentUser) {

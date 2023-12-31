@@ -51,9 +51,17 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
+
   Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
+    if (
+      allowedFields.includes(el) &&
+      obj[el] !== '' &&
+      obj[el] !== 'undefined'
+    ) {
+      newObj[el] = obj[el];
+    }
   });
+
   return newObj;
 };
 
@@ -68,7 +76,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   //Create error if user POSTs password data
   console.log('body', req.file);
   // update user document
-  const filteredBody = filterObj(req.body, 'name', 'email', 'photo');
+  const filteredBody = filterObj(req.body, 'name', 'email', 'photo', 'role');
   if (req.file) filteredBody.photo = req.file.filename;
   console.log(filteredBody);
   const user = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -105,8 +113,8 @@ exports.createUser = (req, res) => {
 exports.deleteUser = factory.deleteOne(User);
 
 exports.adminUpdateUser = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(req.body, 'name', 'email', 'photo');
-  if (req.file.filename) filteredBody.photo = req.file.filename;
+  const filteredBody = filterObj(req.body, 'name', 'email', 'photo', 'role');
+  if (req.file && req.file.filename) filteredBody.photo = req.file.filename;
   console.log(filteredBody);
   const user = await User.findByIdAndUpdate(req.params.id, filteredBody, {
     new: true,
