@@ -110,7 +110,7 @@ exports.uploadTourImages = upload.fields([
 //upload.array('images', 5); req.files
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  if (!req.files.imageCover || !req.files.images) return next();
+  if (!req.files || !req.files.imageCover || !req.files.images) return next();
 
   req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
   await sharp(req.files.imageCover[0].buffer)
@@ -197,5 +197,35 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     data: {
       data: distances,
     },
+  });
+});
+
+exports.adminUpdateTour = catchAsync(async (req, res, next) => {
+  console.log(req.params);
+  const filteredBody = factory.filterObj(
+    req.body,
+    'name',
+    'difficulty',
+    'duration',
+    'price',
+    'maxGroupSize',
+    'tourDescription',
+    'location',
+    'startDates',
+    'difficulty',
+    'imageCover',
+    'summary'
+  );
+  console.log('filtered', filteredBody);
+  if (req.file && req.file.filename) filteredBody.photo = req.file.filename;
+  console.log(filteredBody);
+  const tour = await Tour.findByIdAndUpdate(req.params.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    status: `success`,
+    tour,
   });
 });

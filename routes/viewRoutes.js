@@ -10,12 +10,15 @@ const {
   getReviews,
   getUserList,
   getUpdatePage,
+  getUpdateTours,
+  getAdminTours,
 } = require('../controllers/viewsController');
 const { protect, isLoggedIn } = require('../controllers/authController');
 const {
   createBookingCheckout,
   getAllBookings,
 } = require('../controllers/bookingControler');
+const { getAdminReviews } = require('../controllers/reviewController');
 
 const router = express.Router();
 
@@ -29,9 +32,8 @@ router.get('/signup', getSignupForm);
 router.get('/reviews', protect, isLoggedIn, getReviews);
 
 // Admin
-router.get('/admin/tours', protect, isLoggedIn);
-router.get('/admin/users', protect, isLoggedIn, getUserList);
-router.get('/admin/users/update', protect, isLoggedIn, getUpdatePage);
+router.get('/admin/tours', protect, isLoggedIn, getAdminTours);
+router.get('/admin/users', protect, isLoggedIn, getAdminReviews);
 router.get('/admin/reviews', protect, isLoggedIn);
 router.get('/admin/bookings', protect, isLoggedIn);
 

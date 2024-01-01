@@ -6,7 +6,12 @@ import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
 import { signup } from './signup.js';
 import { reviewCardInit } from './reviewCard.js';
-import { handleDeleteUser, handleEditModal } from './admin.js';
+import {
+  handleDeleteUser,
+  handleEditModal,
+  handleTourModal,
+  handleUserModal,
+} from './admin.js';
 // DOM ELEMENTS
 
 const mapBox = document.getElementById('map');
@@ -17,7 +22,11 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
 const reviewPage = document.querySelector('.card.cardReview');
-const adminCardPage = document.querySelectorAll('.card.cardAdmin');
+const userCardPage = document.querySelectorAll('.card.cardAdmin');
+const editTours = document.querySelector('.edit__tours');
+const formPhoto = document.querySelector('.form__user-photo');
+const modalContainer = document.getElementById('modal-container');
+
 // DELEGATION
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
@@ -95,10 +104,9 @@ if (reviewPage) {
   });
 }
 
-if (adminCardPage) {
+// refactor later probably
+if (userCardPage) {
   const adminCard = document.querySelectorAll('.card.cardAdmin');
-  const modalContainer = document.getElementById('modal-container');
-  const formUserPhoto = document.querySelector('.form__user-photo');
   adminCard.forEach((card) => {
     const updateButton = card.querySelector('.btn--update');
     const deletebutton = card.querySelector('.btn--delete');
@@ -110,14 +118,28 @@ if (adminCardPage) {
     });
     updateButton.addEventListener('click', (e) => {
       e.preventDefault();
-      formUserPhoto.src = `/img/users/${userJson.photo}`;
+      formPhoto.src = `/img/users/${userJson.photo}`;
 
-      handleEditModal(modalContainer, userJson._id, e.target);
+      handleUserModal(modalContainer, userJson._id, e.target);
     });
   });
   window.addEventListener('click', (e) => {
     if (e.target === modalContainer) {
       modalContainer.style.display = 'none';
     }
+  });
+}
+
+if (editTours) {
+  const tourCard = document.querySelectorAll('.card');
+
+  tourCard.forEach((card) => {
+    const editButton = card.querySelector('.btn--edit');
+    const tourJson = JSON.parse(editButton.dataset.tour);
+    editButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      formPhoto.src = `/img/tours/${tourJson.imageCover}`;
+      handleTourModal(modalContainer, tourJson.id, e.target);
+    });
   });
 }
