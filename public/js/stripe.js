@@ -14,7 +14,7 @@ export const bookTour = async (tourId) => {
     // Retrieve the checkout session for the given tour ID
     const session = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/booking/checkout-session/${tourId}`,
+      url: `/api/v1/booking/checkout-session/${tourId}`,
     });
 
     // Redirect to the checkout page using the session ID

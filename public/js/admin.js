@@ -21,7 +21,6 @@ export const handleUserModal = (modalContainer, id, e) => {
     //await UserUpdate(id, form, modalContainer);
     await handleRequest(id, 'patch', 'users', form);
   });
-  console.log(modalContainer);
   modalContainer.style.display = 'flex';
 
   if (e.target === modalContainer) {
@@ -42,7 +41,6 @@ export const handleTourModal = (modalContainer, id, e) => {
 
   date.addEventListener('change', (event) => {
     dateValue = event.target.value;
-    console.log(dateValue);
   });
 
   submitButton.addEventListener('click', async (e) => {
@@ -72,7 +70,6 @@ export const handleTourModal = (modalContainer, id, e) => {
 
   const closeModal = () => {
     document.body.style.overflow = 'auto'; // Enable scrolling on the body
-    console.log('closing');
     modalContainer.style.display = 'none';
     modalContainer.removeEventListener('click', closeModal);
   };
@@ -83,7 +80,6 @@ export const handleTourModal = (modalContainer, id, e) => {
 };
 
 export const handleRequest = async (id, method, route, data) => {
-  console.log(id, method, route, data);
   try {
     const url = `/api/v1/${route}/${id}`;
     const res = await axios({

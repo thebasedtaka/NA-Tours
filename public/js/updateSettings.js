@@ -11,8 +11,8 @@ export const updateSettings = async (data, type) => {
     // Define the API endpoint based on the type of data to update
     const url =
       type === 'password'
-        ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword'
-        : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        ? '/api/v1/users/updateMyPassword'
+        : '/api/v1/users/updateMe';
 
     // Send a patch request to the API endpoint with the updated data
     const res = await axios({

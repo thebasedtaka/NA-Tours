@@ -169,7 +169,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       'host'
     )}/api/v1/users/resetPassword/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
-    console.log(`email sent`);
     res
       .status(200)
       .json({ status: `success`, message: `token sent to email!` });
@@ -195,8 +194,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-
-  console.log(user);
   // set new pasword if token has not yet expired
   if (!user) {
     return next(new AppError('Token invalid or expired'), 400);

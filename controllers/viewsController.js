@@ -36,7 +36,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user',
   });
-  console.log('tour not found');
 
   if (!tour) {
     const formattedSlug = formatSlug(req.params.slug);
