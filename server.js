@@ -14,8 +14,7 @@ const app = require('./app.js');
 //console.log(DB);
 
 const dbConnect = async () => {
-  const DB =
-    'mongodb+srv://taka:taka@cluster0.a4saq7s.mongodb.net/natours?retryWrites=true&w=majority';
+  const DB = process.env.DATABASE;
   try {
     await mongoose.connect(DB, {
       useNewUrlParser: true,
