@@ -1,50 +1,6 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
 
-export const UserUpdate = async (id, body) => {
-  try {
-    const url = `/api/v1/users/${id}`;
-    const res = await axios.patch(url, body);
-
-    if (res.data.status === 'success') {
-      showAlert('success', `User updated successfully ${body}`);
-      window.location.reload();
-    }
-    showAlert('success', `User updated successfully ${body}`);
-  } catch (error) {
-    showAlert('error', error);
-  }
-};
-
-const TourUpdate = async (id, body, modalContainer) => {
-  try {
-    const url = `/api/v1/tours/${id}`;
-    const res = await axios.patch(url, body);
-    if (res.data.status === 'success') {
-      showAlert('success', `Tour updated successfully ${body}`);
-      window.location.reload();
-    }
-  } catch (error) {
-    showAlert('error', error);
-  }
-};
-
-export const handleDeleteUser = async (id) => {
-  try {
-    const url = `/api/v1/users/${id}`;
-    const res = await axios.delete(url);
-    if (res.status === 204 || res.status === 200) {
-      showAlert('success', 'User deleted successfully');
-      window.location.reload();
-    } else {
-      // Handle other status codes or errors
-      console.error(`Unexpected status code: ${res.status}`);
-    }
-  } catch (error) {
-    showAlert('error', error);
-  }
-};
-
 export const handleUserModal = (modalContainer, id, e) => {
   const submitButton = document.querySelector('#submit');
   const dropdown = document.querySelector('#role');
@@ -62,7 +18,8 @@ export const handleUserModal = (modalContainer, id, e) => {
     form.append('password', document.getElementById('password').value);
     form.append('photo', document.getElementById('photo').files[0]);
     form.append('role', selectedOptionValue);
-    await UserUpdate(id, form, modalContainer);
+    //await UserUpdate(id, form, modalContainer);
+    await handleRequest(id, 'patch', 'users', form);
   });
   console.log(modalContainer);
   modalContainer.style.display = 'flex';
@@ -78,14 +35,16 @@ export const handleTourModal = (modalContainer, id, e) => {
   const date = document.getElementById('date');
   let difficultyValue;
   let dateValue;
+
   dropdown.addEventListener('change', (event) => {
     difficultyValue = event.target.value;
   });
+
   date.addEventListener('change', (event) => {
     dateValue = event.target.value;
     console.log(dateValue);
   });
-  console.log(document.getElementById('date'));
+
   submitButton.addEventListener('click', async (e) => {
     e.preventDefault();
 
@@ -98,21 +57,48 @@ export const handleTourModal = (modalContainer, id, e) => {
       'maxGroupSize',
       document.querySelector('#maxGroupSizeInput').value
     );
-    //form.append('location', document.querySelector('#address').value);
-    console.log(dateValue);
+
     form.append('startDates', dateValue);
     form.append('price', document.querySelector('#price').value);
-    //form.append('summary', document.querySelector('#summary').value);
     form.append(
       'description',
       document.querySelector('#tourDescription').value
     );
-    await TourUpdate(id, form, modalContainer);
+    handleRequest(id, 'patch', 'tours', form);
   });
 
   modalContainer.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // Disable scrolling on the body
+
+  const closeModal = () => {
+    document.body.style.overflow = 'auto'; // Enable scrolling on the body
+    console.log('closing');
+    modalContainer.style.display = 'none';
+    modalContainer.removeEventListener('click', closeModal);
+  };
 
   if (e.target === modalContainer) {
-    modalContainer.style.display = 'none';
+    closeModal();
+  }
+};
+
+export const handleRequest = async (id, method, route, data) => {
+  console.log(id, method, route, data);
+  try {
+    const url = `/api/v1/${route}/${id}`;
+    const res = await axios({
+      method,
+      url,
+      data,
+    });
+    if (res.status === 204 || res.status === 200) {
+      showAlert('success', `Tour ${method} successful`);
+      window.location.reload();
+    } else {
+      // Handle other status codes or errors
+      console.error(`Unexpected status code: ${res.status}`);
+    }
+  } catch (error) {
+    showAlert('error', error);
   }
 };

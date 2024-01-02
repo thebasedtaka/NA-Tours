@@ -163,3 +163,43 @@ exports.getAdminTours = catchAsync(async (req, res, next) => {
     tours,
   });
 });
+
+exports.getAdminReviews = catchAsync(async (req, res, next) => {
+  let reviews = await Reviews.find();
+
+  reviews = await Reviews.populate(reviews, {
+    path: 'tour',
+    select: 'name imageCover', // Include the fields you need
+  });
+
+  res.status(200).render('adminReviews', {
+    title: 'Reviews',
+    reviews,
+  });
+});
+
+// TODO : Learn stripe refunds
+// possible if refund date > 30 days after booking date
+// refund possible if booking is cancelled or expired
+exports.getAdminBookings = catchAsync(async (req, res, next) => {
+  //const bookings = await Booking.find();
+  let bookings = await Booking.find();
+
+  bookings = await Booking.populate(bookings, {
+    path: 'tour',
+    model: 'Tour',
+    select: 'name imageCover', // Include the fields you need from the Tour model
+  });
+
+  // Populate the 'user' field with specific fields
+  bookings = await Booking.populate(bookings, {
+    path: 'user',
+    model: 'User',
+    select: 'name email photo', // Include the fields you need from the User model
+  });
+
+  res.status(200).render('adminBookings', {
+    title: 'Users',
+    bookings,
+  });
+});

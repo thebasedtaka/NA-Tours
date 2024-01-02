@@ -9,6 +9,7 @@ import { reviewCardInit } from './reviewCard.js';
 import {
   handleDeleteUser,
   handleEditModal,
+  handleRequest,
   handleTourModal,
   handleUserModal,
 } from './admin.js';
@@ -126,6 +127,7 @@ if (userCardPage) {
   window.addEventListener('click', (e) => {
     if (e.target === modalContainer) {
       modalContainer.style.display = 'none';
+      document.body.style.overflow = 'auto';
     }
   });
 }
@@ -140,6 +142,17 @@ if (editTours) {
       e.preventDefault();
       formPhoto.src = `/img/tours/${tourJson.imageCover}`;
       handleTourModal(modalContainer, tourJson.id, e.target);
+    });
+  });
+}
+
+if (document.querySelector('.admin__reviews')) {
+  const reviewsCard = document.querySelectorAll('.admin__reviews__card');
+  reviewsCard.forEach((review) => {
+    const deleteButton = review.querySelector('.delete');
+    deleteButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleRequest(deleteButton.dataset.id, 'delete', 'reviews');
     });
   });
 }

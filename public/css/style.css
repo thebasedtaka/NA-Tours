@@ -582,6 +582,8 @@ body {
   background: rgba(0, 0, 0, 0.5);
   align-items: center;
   justify-content: center;
+  z-index: 100;
+  overflow-y: auto;
 }
 
 #modal {
@@ -599,6 +601,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .mapboxgl-popup {
@@ -655,6 +658,36 @@ body {
   -ms-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
 }
+
+.admin__reviews {
+  max-width: 100%;
+  margin-bottom: 2rem;
+  padding: 5rem 0;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between cards */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(30rem, 1fr)
+  ); /* Maximum of 2 cards in a row */
+  grid-auto-rows: minmax(auto, 1fr); /* Control the number of rows */
+  justify-content: center; /* Center the cards horizontally */
+  align-items: center; /* Center the cards vertically */
+}
+
+.admin__reviews__card {
+  width: 100%; /* Occupy the full width of the grid cell */
+  max-width: 30rem; /* Limit the maximum width of each card */
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
 .reviews__card {
   width: 30rem;
   padding: 4rem;
@@ -674,6 +707,7 @@ body {
   -ms-flex-align: center;
   align-items: center;
 }
+
 .reviews:before,
 .reviews:after {
   content: '';
