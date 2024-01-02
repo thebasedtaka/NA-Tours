@@ -8,7 +8,6 @@ import { signup } from './signup.js';
 import { reviewCardInit } from './reviewCard.js';
 import {
   handleDeleteUser,
-  handleEditModal,
   handleRequest,
   handleTourModal,
   handleUserModal,
@@ -115,7 +114,7 @@ if (userCardPage) {
 
     deletebutton.addEventListener('click', (e) => {
       e.preventDefault();
-      handleDeleteUser(userJson._id);
+      handleRequest(userJson._id, 'delete', 'users');
     });
     updateButton.addEventListener('click', (e) => {
       e.preventDefault();
