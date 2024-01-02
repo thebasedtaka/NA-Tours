@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import app from './app.js';
 dotenv.config({ path: './config.env' });
 
 process.on('uncaughtException', (err) => {
@@ -9,7 +10,6 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-const app = require('./app.js');
 //const DB = 'mongodb+srv://baka:baka@cluster0.rcdzyi6.mongodb.net/';
 //console.log(DB);
 
