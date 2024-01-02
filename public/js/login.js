@@ -1,5 +1,7 @@
 import axios from 'axios';
-import '@babel/polyfill';
+//import '@babel/polyfill';
+// import 'core-js/stable';
+// import 'regenerator-runtime/runtime.js';
 import { showAlert } from './alerts';
 /**
  * Logs in a user with the given email and password.
