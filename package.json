@@ -2,13 +2,18 @@
   "name": "natours",
   "version": "1.0.0",
   "description": "being based",
-  "main": "app.js",
+  "main": "bundle.js",
+  "targets": {
+    "./public/js/index.js": {
+      "distDir": "./public/js/"
+    }
+  },
   "scripts": {
     "start": "npx nodemon server.js",
     "debug": "ndb server.js",
     "start:prod": "SET NODE_ENV=production&& node -r dotenv/config server.js",
-    "watch:js": "npx parcel watch ./public/js/index.js --out-dir ./public/js/ --out-file bundle.js",
-    "build:js": "npx parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "watch:js": "npx parcel watch ./public/js/index.js --dist-dir ./public/js/",
+    "build:js": "npx parcel build ./public/js/index.js --dist-dir ./public/js/",
     "deploy": "npm run build:js && git add -A && git commit -m \"Deploy\" && git push -u origin"
   },
   "author": "me",
@@ -43,7 +48,8 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "buffer": "^6.0.3",
     "nodemon": "^3.0.2",
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.10.3"
   }
 }
