@@ -8,7 +8,7 @@
     "debug": "ndb server.js",
     "start:prod": "SET NODE_ENV=production&& node -r dotenv/config server.js",
     "watch:js": "npx parcel watch ./public/js/index.js --out-dir ./public/js/ --out-file bundle.js",
-    "build:js": "npx parcel build ./public/js/index.js -o ./public/js/bundle.js",
+    "build:js": "npx parcel build ./public/js/index.js ./public/js/bundle.js",
     "deploy": "npm run build:js && git add -A && git commit -m \"Deploy\" && git push -u origin"
   },
   "author": "me",
