@@ -4,7 +4,7 @@
   "description": "being based",
   "main": "app.js",
   "scripts": {
-    "start": "npx nodemon server.mjs",
+    "start": "npx nodemon server.js",
     "debug": "ndb server.js",
     "start:prod": "SET NODE_ENV=production&& node -r dotenv/config server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
