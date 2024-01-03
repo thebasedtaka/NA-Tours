@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from './app.js';
-
+console.log('active');
 dotenv.config({ path: './config.env' });
 
 process.on('uncaughtException', (err) => {
@@ -11,13 +11,10 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-//const DB = 'mongodb+srv://baka:baka@cluster0.rcdzyi6.mongodb.net/';
-//console.log(DB);
-
 const dbConnect = async () => {
   const DB = process.env.DATABASE;
   try {
-    await mongoose.connect(DB, {
+    mongoose.connect(DB, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
