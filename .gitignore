@@ -4,3 +4,4 @@ node_modules
 .cache/
 /public/js/bundle.js
 /public/js/bundle.js.map
+.parcel-cache
