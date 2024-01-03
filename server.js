@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-console.log('active');
 dotenv.config({ path: './config.env' });
 
 process.on('uncaughtException', (err) => {

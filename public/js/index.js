@@ -106,6 +106,7 @@ if (reviewPage) {
 
 // refactor later probably
 if (userCardPage) {
+  console.log('userCardPage');
   const adminCard = document.querySelectorAll('.card.cardAdmin');
   adminCard.forEach((card) => {
     const updateButton = card.querySelector('.btn--update');
