@@ -1,0 +1,15 @@
+extends base
+include _adminReviewCard
+
+block append head
+  script(src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js')
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  link(href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet')
+  
+block content
+  section.admin__reviews
+    each review in reviews
+      .admin__reviews__card
+        +reviewCard(review)
+
+

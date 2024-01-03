@@ -1,0 +1,27 @@
+extends base
+
+block content
+  main.main
+    .card-container
+      each booking in bookings
+        .card.cardAdmin
+          .card__header
+            .card__picture
+              .card__picture-overlay &nbsp;
+              img.card__picture-img(src=`/img/users/${booking.user.photo}`, alt=`${booking.user.photo}`)
+
+          .card__details
+            h4.card__sub-heading= `${booking.user.name}`
+            p.card__text= booking.tour.name
+            .card__data
+              svg.card__icon
+                use(xlink:href='/img/icons.svg#icon-dollar-sign')
+              span= `${booking.price}`
+
+          .card__footer
+            p.card__ratings
+              span.card__footer-value
+            a.btn.btn--grey.btn--small.btn--delete() Cancel
+            p.card__ratings
+              span.card__footer-value
+            a.btn.btn--green.btn--small.btn--update(data-user=user) Issue a refund
