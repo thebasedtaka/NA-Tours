@@ -662,30 +662,28 @@ body {
 .admin__reviews {
   max-width: 100%;
   margin-bottom: 2rem;
-  padding: 5rem 0;
+  padding: 5rem;
   display: grid;
-  grid-gap: 2rem; /* Adjust the gap between cards */
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(30rem, 1fr)
-  ); /* Maximum of 2 cards in a row */
-  grid-auto-rows: minmax(auto, 1fr); /* Control the number of rows */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20rem;
   justify-content: center; /* Center the cards horizontally */
-  align-items: center; /* Center the cards vertically */
+  align-items: center;
+  overflow: hidden;
 }
 
 .admin__reviews__card {
   width: 100%; /* Occupy the full width of the grid cell */
-  max-width: 30rem; /* Limit the maximum width of each card */
+  max-width: 30rem;
   padding: 2rem;
   background-color: #f7f7f7;
   border-radius: 3px;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
   scroll-snap-align: center;
-  display: flex;
+  display: grid;
   flex-direction: column;
   align-items: center;
   margin: auto;
+  overflow: hidden;
 }
 
 .reviews__card {
@@ -698,7 +696,7 @@ body {
   scroll-snap-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: grid;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -1151,11 +1149,15 @@ body {
 }
 
 .card-container {
-  max-width: 120rem;
+  /* max-width: 120rem; */
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 7rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px;
 }
 
 .card {
