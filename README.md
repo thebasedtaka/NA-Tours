@@ -26,7 +26,7 @@ Man pages have been added. Checkout `man colorls`.
 
 ### Routes
 
-A complete explenation on how to use my routes is on [postman](https://documenter.getpostman.com/view/26744346/2s9YsMAWeS) ![image](https://github.com/thebasedtaka/NA-Tours/assets/118682791/ec2c71a5-5924-4573-84d2-fe6dd1200749)
- 
-  ![image](https://github.com/thebasedtaka/NA-Tours/assets/118682791/33437815-e95a-47e4-9389-fec6b0e38de0)
+A complete explenation on how to use my routes is on [postman](https://documenter.getpostman.com/view/26744346/2s9YsMAWeS) 
 
+![image](https://github.com/thebasedtaka/NA-Tours/assets/118682791/ec2c71a5-5924-4573-84d2-fe6dd1200749)
+ 
